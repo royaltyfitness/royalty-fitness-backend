@@ -13,8 +13,7 @@ require('dotenv').config();
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect(process.env.MONGO_URI);
-//   await mongoose.connect("mongodb+srv://royaltyfitness:Royalty@gymdata.ptratk2.mongodb.net/?retryWrites=true&w=majority");
+  await mongoose.connect("mongodb+srv://royaltyfitness:Royalty@cluster0.dooh1lu.mongodb.net/?retryWrites=true&w=majority");
   console.log('db connected');
 }
 
@@ -80,7 +79,7 @@ server.post('/addMember', async (req, res) => {
         user.FeesBalance = req.body.feesbalance;
         user.PT = req.body.pt;
         user.role = "member";
-        user.Password = process.env.USERPASSWORD;
+        user.Password = "fitness143";
         const doc = await user.save();
         // console.log(doc);
         res.json(doc);
@@ -165,7 +164,7 @@ server.post("/searchMember",async (req, res) => {
         if (mem) {
             if (mem.Password === password) {
                 const role = mem.role;
-                const token = jwt.sign({role},process.env.TOKEN,{expiresIn:'1d'});
+                const token = jwt.sign({role},"ROYALTY-FITNESS-CLUB",{expiresIn:'1d'});
                 res.send({ 
                     success: true, 
                     message: "Member Exists.", 
